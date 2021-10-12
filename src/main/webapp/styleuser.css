@@ -1,3 +1,7 @@
+*{
+    box-sizing: border-box;
+}
+
 body {
    
   background: #007bff;
@@ -38,13 +42,36 @@ body {
     font-size: 11px
 }
 .tabOption{
-	margin:20px;
-	padding-left: 10%;
-	
+padding-left: 10%;
+}
+.tabOption:hover{
+	 background: #58aafc;
+	 padding-top: 16px;
+	 color:white;
 }
 .add-experience:hover {
     background: #BA68C8;
     color: #fff;
     cursor: pointer;
     border: solid 1px #BA68C8
+}
+.titlepost{
+	color: #111;
+	font-size: 17px;    
+	font-weight: 700;
+}
+a{
+	text-decoration: none;
+	color: black;
+}
+.btnsetup{
+	width:70px;
+	height:40px;
+	margin-top:10px;
+	margin-bottom: 10px;
+	text-align: center;
+}
+.editcontent{
+	width:100%;
+	height:100%;
 }

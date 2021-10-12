@@ -6,7 +6,7 @@
 <meta charset="utf-8">
 <link rel="stylesheet" href="styleuser.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<title>User</title>
+<title>Admin</title>
 </head>
 <body>
 <div class="container rounded bg-white mt-5 mb-5">
@@ -14,11 +14,23 @@
         <div class="col-md-3 border-right">
             <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold">Edogaru</span><span class="text-black-50">edogaru@mail.com.my</span><span> </span></div>
         	<div class="row mt-2">
-        		<div class="col-md-12 border-bottom tabOption"><p>Information</p> </div>
+        		<div class="col-md-12 border-bottom tabOption" onclick="information()"><p>Information</p> </div>
         		<div class="col-md-12 border-bottom tabOption"><p>Post</p> </div>
         		<div class="col-md-12 border-bottom tabOption"><p>Comment</p> </div>
+        		<div class="col-md-12 border-bottom tabOption"><p>Post Requests</p> </div>
+        		<div class="col-md-12 border-bottom tabOption"><p>Comment Requests</p> </div>
         	</div>
         </div>
+        <script type="text/javascript">
+        function information(){
+        	try {
+        		window.location.href='LoginServlet';
+			} catch (e) {
+				// TODO: handle exception
+			}
+        	
+        }
+        </script>
         
         
         <div class="col-md-5 border-right">
