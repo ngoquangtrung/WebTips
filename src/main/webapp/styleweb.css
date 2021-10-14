@@ -26,4 +26,13 @@ label.error {
 		color:red;
 		width: 200px;
 	}
-
+.latest-news{
+	height:600px;
+}
+.latest-news-item{
+	height:200px;
+}
+.img-thumbnail{
+	width:180px;
+	height:150px;
+}
