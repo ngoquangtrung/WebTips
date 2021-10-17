@@ -2,32 +2,30 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
 
 import dao.ListPostDao;
 import model.Post;
 
 /**
- * Servlet implementation class PostController
+ * Servlet implementation class loadMoreCtrl
  */
-@WebServlet("/PostController")
-public class PostController extends HttpServlet {
+@WebServlet("/loadMoreCtrl")
+public class loadMoreCtrl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public PostController() {
+    public loadMoreCtrl() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,15 +35,25 @@ public class PostController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
-		PrintWriter out = response.getWriter();
+		int index=Integer.parseInt(request.getParameter("index"));
+		PrintWriter out= response.getWriter();
 		try {
-			List<Post> list=new ListPostDao().searchPost("");
-			Post latestpost= new ListPostDao().loadLatest();
-			request.getSession().setAttribute("latestpost", list);
-			request.getSession().setAttribute("postlist", list);
-			response.sendRedirect("index.jsp");
-		} catch (Exception ex) {
-			Logger.getLogger(PostController.class.getName()).log(Level.SEVERE,null,ex);
+			List<Post> list= new ListPostDao().loadPostItem(index);
+			for (Post post : list) {
+				out.print("<div id=\""+post.getId_post()+"\" class=\"row post-item\" onlcik=\" \" >\r\n"
+						+ "	    <div class=\"col-md-3\">\r\n"
+						+ "	    	<img alt=\"\" src=\""+post.getSrc()+"\" class=\"img-fluid\">\r\n"
+						+ "    	</div>\r\n"
+						+ "    	<div class=\"col-md-9\">\r\n"
+						+ "		<h3>"+post.getTitle()+"</h3>\r\n"
+						+ "		<p>"+post.getSummary()+"</p>\r\n"
+						+ "    	</div>\r\n"
+						+ "    </div>");
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		

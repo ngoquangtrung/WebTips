@@ -3,7 +3,7 @@ package model;
 public class Post {
 
 	private int id_post;
-	private String name;
+	private String title;
 	private String src;
 	private String summary;
 	private String content;
@@ -12,9 +12,9 @@ public class Post {
 	private int id_category;
 	private String time;
 	public Post() {}
-	public Post(int idp,String name,String src,String summary,String content,int status,int idu,int idc,String time) {
+	public Post(int idp,String title,String src,String summary,String content,int status,int idu,int idc,String time) {
 		this.id_post=idp;
-		this.name=name;
+		this.title=title;
 		this.src=src;
 		this.summary=summary;
 		this.content=content;
@@ -29,11 +29,11 @@ public class Post {
 	public void setId_post(int id_post) {
 		this.id_post = id_post;
 	}
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String name) {
+		this.title = name;
 	}
 	public String getSrc() {
 		return src;

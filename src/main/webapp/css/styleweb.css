@@ -1,0 +1,45 @@
+@charset "ISO-8859-1";
+body {
+  background: #007bff;
+  background: linear-gradient(to right, #0062E6, #33AEFF);
+}
+
+.btn-login {
+	width:100%;
+  font-size: 0.9rem;
+  letter-spacing: 0.05rem;
+  padding: 0.75rem 1rem;
+}
+
+.btn-google {
+  color: white !important;
+  background-color: red !important;
+}
+
+.btn-facebook {
+  color: white !important;
+  background-color: blue !important;  
+}
+
+label.error {
+		display: inline-block;
+		color:red;
+		width: 200px;
+	}
+.latest-news{
+	height:600px;
+}
+.latest-news-item{
+	height:200px;
+}
+.img-thumbnail{
+	width:180px;
+	height:150px;
+}
+.top-post{
+	background-color: #c0c0c0;
+	padding: 10px 10px 10px 10px;
+}
+.container{
+	margin-top: 60px !important;
+}
