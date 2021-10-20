@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import dao.ListPostDao;
 import model.Post;
+import model.User;
 
 /**
  * Servlet implementation class PostController
@@ -37,11 +38,14 @@ public class PostController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
-		PrintWriter out = response.getWriter();
+		PrintWriter out = response.getWriter();		
 		try {
-			List<Post> list=new ListPostDao().searchPost("");
+			User user= new User(1,"name","email","pass",1,"","",1,1);
+			HttpSession session=request.getSession(true);
+			session.setAttribute("currentuser", user);
+			List<Post> list=new ListPostDao().loadPostUser(user);
 			Post latestpost= new ListPostDao().loadLatest();
-			request.getSession().setAttribute("latestpost", list);
+			request.getSession().setAttribute("latestpost", latestpost);
 			request.getSession().setAttribute("postlist", list);
 			response.sendRedirect("index.jsp");
 		} catch (Exception ex) {

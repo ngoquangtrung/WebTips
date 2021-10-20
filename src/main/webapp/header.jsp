@@ -60,7 +60,7 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#">User Name</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Login </a>
+          <a class="dropdown-item" href="/GameRule/user.jsp">Login </a>
         </div>
       </li>
     </ul>

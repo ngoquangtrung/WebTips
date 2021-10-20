@@ -8,6 +8,7 @@ import java.util.List;
 
 import context.DBContext;
 import model.Post;
+import model.User;
 
 public class ListPostDao {	
 	
@@ -51,6 +52,24 @@ public class ListPostDao {
 		return null;
 	}
 	
+	
+	public Post loadPostWithID(int idpost) throws Exception {
+		try {
+			String query ="select*from post where id_post=?";
+			conn =new DBContext().getConnection();
+			ps=conn.prepareStatement(query);
+			ps.setInt(1, idpost);
+			rs=ps.executeQuery();
+			while(rs.next()) {
+				Post post=new Post(rs.getInt(1),rs.getString(9),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getInt(6),rs.getInt(7),rs.getString(8));
+				return post;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	}
+	
 	public List<Post> loadPostItem(int index) throws Exception{
 		try {
 			
@@ -66,6 +85,30 @@ public class ListPostDao {
 			}
 			
 			return list;
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	}
+	
+	public List<Post> loadPostUser(User user) throws Exception{
+		try {
+			int id =user.getIduser();
+			List<Post> list=new ArrayList<>();
+			String query="select * from post where id_user=?";
+			conn =new DBContext().getConnection();
+			ps=conn.prepareStatement(query);
+			ps.setInt(1, id);
+			rs=ps.executeQuery();
+			while(rs.next()) {
+				Post post=new Post(rs.getInt(1),rs.getString(9),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getInt(6),rs.getInt(7),rs.getString(8));
+				list.add(post);
+			}
+			return list;
+			
+			
 			
 			
 		} catch (Exception e) {

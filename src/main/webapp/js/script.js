@@ -1,3 +1,22 @@
+$(document).ready(function(){
+	$('#btn-addpart').click(function(){
+		$.ajax({
+    		url:"/GameRule/PartCtrl",
+    		type:"post",
+			data:{
+				
+			},
+    		success:function (rs){
+    			document.getElementById("content").innerHTML+=rs;
+    		},
+    		error: function(xhr){
+    			
+    		}
+    	})
+	});
+});
+
+
 function listPost(){
 	$.ajax({
     		url:"/GameRule/listPostctrl",
@@ -14,12 +33,12 @@ function listPost(){
     	})
 };
 
-function detailPost(){
+function detailPost(id){
 	$.ajax({
     		url:"/GameRule/detailPostctrl",
     		type:"get",
 			data:{
-				
+				id_currentpost:id,
 			},
     		success:function (rs){
     			document.getElementById("replace").innerHTML=rs;
@@ -45,6 +64,23 @@ function addPost(){
     		}
     	})
 };
+
+function addPart(){
+	$.ajax({
+    		url:"/GameRule/PartCtrl",
+    		type:"get",
+			data:{
+				
+			},
+    		success:function (rs){
+    			document.getElementById("content").innerHTML+=rs;
+    		},
+    		error: function(xhr){
+    			
+    		}
+    	})
+};
+
 
 function infoUser(){
 	$.ajax({

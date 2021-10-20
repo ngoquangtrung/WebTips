@@ -56,7 +56,7 @@
 	    	<img alt="" src="${i.getSrc() }" class="img-fluid">
     	</div>
     	<div class="col-md-9">
-		<h3>${i.getTitle()}</h3>
+		<h3><a href="/GameRule/contentPostCtrl?idpost=${i.getId_post()}&title=${i.getTitle()}">${i.getTitle()}</a></h3>
 		<p>${i.getSummary()}</p>
     	</div>
     </div>
