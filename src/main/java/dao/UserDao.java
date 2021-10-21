@@ -29,7 +29,6 @@ public class UserDao {
 		//String query="insert into [dbo].[user](name_user,email,pass,gender,birthday,time_up,permission,status_user) values(?,?,?,?,?,?,?,?)"; 
 		conn=new DBContext().getConnection();
 		ps=conn.prepareStatement(query);
-		//ps=conn.prepareStatement(query);
 		ps.setString(1,user.getName());
 		ps.setString(2, user.getEmail());
 		ps.setString(3, user.getPass());

@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<form action="">
+<form action="/GameRule/AddPostCtrl" method="post" enctype="multipart/form-data">
 <div class="row">
          <div class="col-md-12">
          	<div><label class="font-weight-bold">Category</label></div>
          	<div>
-         	<select>
+         	<select name="category">
          	<option value="1">Broadgame</option>
          	
          	<option value="2">Vận động</option>
@@ -31,7 +31,7 @@
 	        	<textarea rows="2" cols="40" class="editcontent" name="txt_parttitle1"></textarea>
 	        	 </div>
 	        	 <div><label class="font-weight-bold">Part image</label>
-	        	<input type="file" placeholder="image" name="file">
+	        	<input type="file" placeholder="image" name="file1">
 	        	 </div>
 	        	<div><label class="font-weight-bold">Part content</label>
 	        	<textarea rows="5" cols="40" class="editcontent" name="txt_partcontent1"></textarea>
@@ -49,7 +49,7 @@
 </div>
 <div class=" row align-items-center text-center">	        
         <div class="col-md-6"> <button type="button" class="btn btn-success " id="btn-addpart" onclick="addPart()"> Add Part</button></div>
-        <div class="col-md-6"> <button type="button" class="btn btn-success btnsetup">Send</button></div>
+        <div class="col-md-6"> <button type="submit" class="btn btn-success btnsetup">Send</button></div>
         
 </div>
 </form>

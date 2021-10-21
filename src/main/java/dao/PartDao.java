@@ -3,6 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,12 +32,39 @@ public class PartDao {
 		}
 		return list;
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
-		
-		
-		
-		
 		return null;
 	}
+	
+	
+	public void addPart(Post post,PostPart part) throws Exception{
+		try {
+			int id_post=post.getId_post();
+			String src=part.getSrc_image();
+			String title=part.getTitle();
+			String content=part.getContent();
+			String query="insert into post_detail(id_post,src_image,title_part,content_part) values (?,?,?,?)";
+			conn= new DBContext().getConnection();
+			ps=conn.prepareStatement(query);
+			
+			ps.setInt(1, id_post);
+			ps.setString(2, src);
+			ps.setString(3, title);
+			ps.setString(4, content);
+			ps.executeUpdate();
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+		}
+	}
+	
+	
 }

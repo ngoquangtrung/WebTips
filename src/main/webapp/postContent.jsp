@@ -22,10 +22,7 @@ ${currentpost.getTitle() }
 <h3>${i.getTitle()}</h3>
 <img alt="" src="${i.getSrc_image() }">
 <p>${i.getContent()}</p>
-
 </div>
-
-
 </c:forEach>
 
 </div>

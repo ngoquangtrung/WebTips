@@ -3,6 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class ListPostDao {
 			
 			return list;
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		return null;		
 		
@@ -38,7 +39,7 @@ public class ListPostDao {
 	
 	public Post loadLatest() throws Exception {
 		try {
-			String query ="select top(1) form post order by id desc";
+			String query ="select top(1) * from post order by id_post desc";
 			conn =new DBContext().getConnection();
 			ps=conn.prepareStatement(query);
 			rs=ps.executeQuery();
@@ -47,7 +48,7 @@ public class ListPostDao {
 				return post;
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		return null;
 	}
@@ -65,7 +66,7 @@ public class ListPostDao {
 				return post;
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		return null;
 	}
@@ -88,7 +89,7 @@ public class ListPostDao {
 			
 			
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		return null;
 	}
@@ -112,14 +113,14 @@ public class ListPostDao {
 			
 			
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		return null;
 	}
 	
-	public void addPost(Post post) {
+	public void addPost(Post post) throws Exception{
 		try {
-		String name=post.getTitle();
+		String title=post.getTitle();
 		String src=post.getSrc();
 		String summary=post.getSummary();
 		String content=post.getContent();
@@ -133,7 +134,7 @@ public class ListPostDao {
 		
 		conn=new DBContext().getConnection();
 		ps=conn.prepareStatement(query);
-		ps.setString(1, name);
+		ps.setString(1, title);
 		ps.setString(2,src);
 		ps.setString(3,summary);
 		ps.setString(4,content);
@@ -146,7 +147,13 @@ public class ListPostDao {
 		
 		
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
+		}
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
 		}
 	}
 	
@@ -159,7 +166,7 @@ public class ListPostDao {
 			ps.setInt(1, id);
 			ps.executeUpdate();
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 	}
 

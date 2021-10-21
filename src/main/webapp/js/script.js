@@ -66,11 +66,13 @@ function addPost(){
 };
 
 function addPart(){
+	let countpart=document.getElementsByClassName("part").length;
 	$.ajax({
+		
     		url:"/GameRule/PartCtrl",
     		type:"get",
 			data:{
-				
+				numberPart:countpart+1,
 			},
     		success:function (rs){
     			document.getElementById("content").innerHTML+=rs;
