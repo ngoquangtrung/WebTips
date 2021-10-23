@@ -33,7 +33,7 @@ public class PartCtrl extends HttpServlet {
 		PrintWriter out= response.getWriter();
 		request.getSession().setAttribute("countPart", numberPart);
 		try {
-			out.println("<div class=\"part\">\r\n"
+			out.println("<div class=\"part border-top\">\r\n"
 					+ "	        	<div><label class=\"font-weight-bold\">Part title</label>\r\n"
 					+ "	        	<textarea rows=\"2\" cols=\"40\" class=\"editcontent\" name=\"txt_parttitle"+numberPart+"\"></textarea>\r\n"
 					+ "	        	 </div>\r\n"

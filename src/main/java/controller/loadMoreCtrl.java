@@ -38,14 +38,14 @@ public class loadMoreCtrl extends HttpServlet {
 		int index=Integer.parseInt(request.getParameter("index"));
 		PrintWriter out= response.getWriter();
 		try {
-			List<Post> list= new ListPostDao().loadPostItem(index);
+			List<Post> list= new ListPostDao().loadPostItem(index,5);
 			for (Post post : list) {
 				out.print("<div id=\""+post.getId_post()+"\" class=\"row post-item\" onlcik=\" \" >\r\n"
 						+ "	    <div class=\"col-md-3\">\r\n"
 						+ "	    	<img alt=\"\" src=\""+post.getSrc()+"\" class=\"img-fluid\">\r\n"
 						+ "    	</div>\r\n"
 						+ "    	<div class=\"col-md-9\">\r\n"
-						+ "		<h3>"+post.getTitle()+"</h3>\r\n"
+						+ "		<h3><a href=\"/GameRule/contentPostCtrl?idpost="+post.getId_post()+"&title="+post.getTitle()+"\">"+post.getTitle()+"</a></h3>\r\n"
 						+ "		<p>"+post.getSummary()+"</p>\r\n"
 						+ "    	</div>\r\n"
 						+ "    </div>");

@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -10,22 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dao.ListPostDao;
-import dao.PartDao;
 import model.Post;
-import model.PostPart;
 
 /**
- * Servlet implementation class detailPostctrl
+ * Servlet implementation class deleteAllCtrl
  */
-@WebServlet("/detailPostctrl")
-public class detailPostctrl extends HttpServlet {
+@WebServlet("/deleteAllCtrl")
+public class deleteAllCtrl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public detailPostctrl() {
+    public deleteAllCtrl() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,29 +32,32 @@ public class detailPostctrl extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-				
-		try {
-			int id_post=Integer.parseInt(request.getParameter("id_currentpost"));
-			Post post=new ListPostDao().loadPostWithID(id_post);
-			List<PostPart> list= new PartDao().loadPart(post);
-			
-			HttpSession session=request.getSession(true);
-			
-			session.setAttribute("currentpost", post);
-			session.setAttribute("listpart", list);
-			request.getRequestDispatcher("screen/detailPost.jsp").forward(request, response);
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-		}		
+		HttpSession session=request.getSession();
+		List<Post> list= (List<Post>) session.getAttribute("listuser");
+		
+		for(Post p:list) {
+			int id=p.getId_post();			
+			PrintWriter out=response.getWriter();
+			out.print( "id "+ id);
+			out.println(request.getParameter("check_box_"+id));
+			//out.println(request.getParameter("check_box_"+id));
+		}
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		HttpSession session=request.getSession();
+		List<Post> list= (List<Post>) session.getAttribute("listuser");
+		
+		for(Post p:list) {
+			int id=p.getId_post();			
+			PrintWriter out=response.getWriter();
+			out.print( "id "+ id);
+			out.println(request.getParameter("check_box_"+id));
+			//out.println(request.getParameter("check_box_"+id));
+		}
 	}
 
 }

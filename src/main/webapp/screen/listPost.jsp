@@ -16,18 +16,27 @@
             	<div><span class="text-black-50">10-10-2021</span></div>
         </div>
         </div>
-        
+ <form action="/GameRule/UpdatePostCtrl" method="get" id="fromlistpost" onsubmit="return confirmdelete()">      
 <c:forEach var="i" items="${listuser}">
-<div class="row post-item" id="${i.getId_post()}" onclick="detailPost(${i.getId_post()})">
+<div class="row post-item" id="${i.getId_post()}">
         <div class="col-md-3 post-item">
-        <img alt="" src="${i.getSrc() }" class="img-fluid">
+        <img alt="" src="${i.getSrc() }" class="img-fluid" onclick="detailPost(${i.getId_post()})">
         </div>
-        <div class=" col-md-9 border-bottom text-black-50">
-            	<a href="#" class="titlepost ">${i.getTitle()}</a>
+        <div class=" col-md-8 border-bottom text-black-50">
+            	<a href="#" class="titlepost"  onclick="detailPost(${i.getId_post()})">${i.getTitle()}</a>            	
             	<div><span class="text-black-50">${i.getTime()}</span></div>
         </div>
+        <div class="col-md-1">
+        <input type="checkbox" name="check_box_${i.getId_post()}" value="${i.getId_post()}">
         </div>
+        
+ </div>
 </c:forEach>        
+       <div class="row" >
+        <div class="col-md-12 align-items-center text-center createpost">
+        <button class="btn btn-danger my-2 my-sm-0" type="submit">Delect all selected</button>
+        </div>
         
-        
+</div> 
+   </form>       
   

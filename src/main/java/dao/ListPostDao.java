@@ -71,13 +71,14 @@ public class ListPostDao {
 		return null;
 	}
 	
-	public List<Post> loadPostItem(int index) throws Exception{
+	public List<Post> loadPostItem(int index,int range) throws Exception{
 		try {
 			
-			String query="select * from post order by time_post desc offset ? rows fetch next 5 rows only";
+			String query="select * from post except select* from post where status_post=0 order by time_post desc offset ? rows fetch next ? rows only";
 			conn =new DBContext().getConnection();
 			ps=conn.prepareStatement(query);
 			ps.setInt(1, index);
+			ps.setInt(2, range);
 			rs=ps.executeQuery();
 			List<Post> list=new ArrayList<Post>();
 			while(rs.next()) {
@@ -98,7 +99,7 @@ public class ListPostDao {
 		try {
 			int id =user.getIduser();
 			List<Post> list=new ArrayList<>();
-			String query="select * from post where id_user=?";
+			String query="select * from post where id_user=? except select* from post where status_post=0 order by time_post desc";
 			conn =new DBContext().getConnection();
 			ps=conn.prepareStatement(query);
 			ps.setInt(1, id);
@@ -116,6 +117,28 @@ public class ListPostDao {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	
+	public List<Post> loadCategory(int idcategory)throws Exception{
+		try {
+			String query="select * from post where id_category= ? except select* from post where status_post=0 order by time_post desc";
+			conn =new DBContext().getConnection();
+			ps=conn.prepareStatement(query);
+			ps.setInt(1, idcategory);
+			rs=ps.executeQuery();
+			List<Post> list=new ArrayList<Post>();
+			while(rs.next()) {
+				Post post=new Post(rs.getInt(1),rs.getString(9),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getInt(6),rs.getInt(7),rs.getString(8));
+				list.add(post);
+			}
+			
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;		
+		
 	}
 	
 	public void addPost(Post post) throws Exception{
@@ -156,6 +179,35 @@ public class ListPostDao {
 			//e.printStackTrace();
 		}
 	}
+	
+	
+	
+	
+	public void updatePost(Post post) throws Exception {
+		try {
+			int id_post=post.getId_post();
+			String title=post.getTitle();
+			String summary=post.getSummary();
+			String src_image=post.getSrc();
+			int status=post.getStatus();
+			int category=post.getId_category();
+			
+		String query="exec sproc_updatePost ?,?,?,?,?,?";
+		conn= new DBContext().getConnection();
+		ps=conn.prepareStatement(query);
+		ps.setInt(1, id_post);
+		ps.setString(2, src_image);
+		ps.setString(3,summary);
+		ps.setInt(4, status);
+		ps.setInt(5, category);
+		ps.setString(6, title);
+		ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	
 	public void deletePost(Post post) {
 		try {

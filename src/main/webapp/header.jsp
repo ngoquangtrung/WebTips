@@ -6,7 +6,7 @@
 
 <html>
 <head>
-<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -30,18 +30,18 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="/GameRule/index.jsp">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/GameRule/">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle"  href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Category
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">BroadGame</a>
+          <a class="dropdown-item" href="/GameRule/PostController?category=broadgame">BroadGame</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Vận động</a>
+          <a class="dropdown-item" href="/GameRule/PostController?category=vandong">Vận động</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Trờ chơi dân gian</a>
+          <a class="dropdown-item" href="/GameRule/PostController?category=dangian">Trờ chơi dân gian</a>
         </div>
       </li>
       <li class="nav-item">

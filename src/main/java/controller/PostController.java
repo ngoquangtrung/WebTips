@@ -38,17 +38,46 @@ public class PostController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
+		
 		PrintWriter out = response.getWriter();		
 		try {
 			User user= new User(1,"name","email","pass",1,"","",1,1);
 			HttpSession session=request.getSession(true);
 			session.setAttribute("currentuser", user);
-			List<Post> list=new ListPostDao().loadPostUser(user);
-			Post latestpost= new ListPostDao().loadLatest();
-			request.getSession().setAttribute("latestpost", latestpost);
-			request.getSession().setAttribute("postlist", list);
-			response.sendRedirect("index.jsp");
+			String type=request.getParameter("category");
+			
+			if(type!=null) {
+				if(type.equals("broadgame")) {
+					List<Post> listpost=new ListPostDao().loadCategory(1);
+					session.setAttribute("listpost", listpost);
+					session.setAttribute("type", "Broad game");
+					response.sendRedirect("category.jsp");
+					
+				}else if(type.equals("dangian")) {
+					List<Post> listpost=new ListPostDao().loadCategory(3);
+					session.setAttribute("listpost", listpost);
+					session.setAttribute("type", "Dân gian");
+					response.sendRedirect("category.jsp");
+				}
+				else if(type.equals("vandong")) {
+					List<Post> listpost=new ListPostDao().loadCategory(2);
+					session.setAttribute("listpost", listpost);
+					session.setAttribute("type", "Vận động");
+					response.sendRedirect("category.jsp");
+				}
+			
+			}else{
+				List<Post> list=new ListPostDao().loadPostItem(4,5);
+				List<Post> listest=new ListPostDao().loadPostItem(2,3);
+				Post latestpost= new ListPostDao().loadLatest();
+				session.setAttribute("postest", latestpost);
+				session.setAttribute("latestpost", listest);
+				session.setAttribute("postlist", list);
+				response.sendRedirect("index.jsp");
+			}
+			
 		} catch (Exception ex) {
+			
 			Logger.getLogger(PostController.class.getName()).log(Level.SEVERE,null,ex);
 		}
 		

@@ -42,7 +42,7 @@ public class listPostctrl extends HttpServlet {
 		
 		try {
 			List<Post> list = new ListPostDao().loadPostUser(user);
-			request.getSession().setAttribute("listuser", list);
+			session.setAttribute("listuser", list);
 			request.getRequestDispatcher("screen/listPost.jsp").forward(request, response);			
 			
 		} catch (Exception e) {

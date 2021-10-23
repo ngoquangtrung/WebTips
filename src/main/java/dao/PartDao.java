@@ -66,5 +66,28 @@ public class PartDao {
 		}
 	}
 	
+	public void updatePart(PostPart part) throws Exception{
+		try {
+			int id=part.getId_part();
+			String title=part.getTitle();
+			String src=part.getSrc_image();
+			String content=part.getContent();
+			
+			String query="exec sproc_updatePostDetail ?,?,?,?";
+			conn=new DBContext().getConnection();
+			ps=conn.prepareStatement(query);
+			ps.setInt(1, id);
+			ps.setString(2,src );
+			ps.setString(3, title);
+			ps.setString(4,content);
+			
+			ps.executeUpdate();
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+	}
+	
 	
 }
