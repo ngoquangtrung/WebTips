@@ -3,21 +3,23 @@ package controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import dao.ListPostDao;
 import dao.PartDao;
 import model.Post;
 import model.PostPart;
+import model.User;
 
 /**
  * Servlet implementation class AddPostCtrl
@@ -48,9 +50,12 @@ public class AddPostCtrl extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html;charset=UTF-8");
+		request.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
 		try {
-			
+			HttpSession session=request.getSession();
+			User user=(User) session.getAttribute("currentuser");
 			int numberpart=Integer.parseInt(request.getSession().getAttribute("countPart").toString());
 			
 			String appPath = request.getServletContext().getRealPath("");
@@ -70,6 +75,7 @@ public class AddPostCtrl extends HttpServlet {
 		        
 		        int category= Integer.parseInt(request.getParameter("category"));
 				String title= request.getParameter("txt_posttitle");
+				
 				String summary=request.getParameter("txt_summary");
 		        Part part=request.getPart("img_thumbnail");
 		        String namefile= part.getSubmittedFileName();
@@ -77,7 +83,8 @@ public class AddPostCtrl extends HttpServlet {
 		        part.write(file_path);
 		        String src= "/GameRule/"+SAVE_DIRECTORY+"\\"+namefile;
 		        String time= java.time.LocalDateTime.now().toString();
-		        Post post=new Post(1,title,src,summary,"",2,1,category,time);
+		        Post post=new Post(1,title,src,summary,"",2,user.getIduser(),category,time);
+		        Logger.getLogger(PostController.class.getName()).log(Level.SEVERE,null,"title"+post.getTitle() );
 		        ListPostDao postdao =new ListPostDao();
 		        PartDao partdao=new PartDao();
 		        postdao.addPost(post);
@@ -106,29 +113,7 @@ public class AddPostCtrl extends HttpServlet {
 		        }
 		        
 		        response.sendRedirect("user.jsp");
-		        /*
-		        String parttitle=request.getParameter("txt_parttitle1");
-				String contentpart=request.getParameter("txt_partcontent1");
-
-		        Part partpost=request.getPart("file1");
-		        String namefilepart=partpost.getSubmittedFileName();
 		        
-		        String file_path_part=fullSavePath +File.separator + namefilepart;
-		        
-		        partpost.write(file_path_part);
-		        
-		        
-		        String src_part= "/GameRule/"+SAVE_DIRECTORY+"\\"+namefilepart;
-		        
-		        
-		        
-		        
-				
-				PostPart postpart =new PostPart(1,postlatest.getId_post(),src_part,parttitle, contentpart);
-				
-				partdao.addPart(postlatest, postpart);
-		        */
-				
 			
 		} catch (Exception e) {
 			e.printStackTrace();			

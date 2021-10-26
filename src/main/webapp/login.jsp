@@ -6,11 +6,18 @@
 
 <html>
 <head>
-<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<meta charset="utf-8">
-<link rel="stylesheet" href="styleweb.css">
+
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="js/script.js"></script>
+<meta charset="utf-8">
+<link rel="stylesheet" href="css/styleweb.css">
+<link rel="stylesheet" href="css/styleuser.css">
+
 <title>Login</title>
 </head>
 <body>
@@ -35,12 +42,11 @@
               <div class="alert-danger" role="alert">${loginerror}</div>
 
               <div class="form-check mb-3">
-                <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">
-                <label class="form-check-label" for="rememberPasswordCheck">
+                <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck" name="remember">
+                <label class="form-check-label" for="rememberPasswordCheck" >
                   Remember password
                 </label>
               </div>
-              <p>Tiếng việt</p>
               
               <div class="d-grid">
                 <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Sign
@@ -50,12 +56,13 @@
               <div><p>Not have a account, <a href="http://localhost:8080/GameRule/register.jsp"> Register</a></p></div>
               <hr class="my-4">
               <div class="d-grid mb-2">
-                <button class="btn btn-google btn-login text-uppercase fw-bold" type="submit">
-                  <i class="fab fa-google me-2"></i> Sign in with Google
-                </button>
+                <p class="btn btn-google btn-login text-uppercase fw-bold" >
+                  <i class="fab fa-google me-2"></i> <a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:8080/GameRule/login-google&response_type=code
+    &client_id=290818297744-pdh2mp1jckhb4bk82218kpc7s7g4i60k.apps.googleusercontent.com&approval_prompt=force">Sign in with Google</a>
+                </p>
               </div>
               <div class="d-grid">
-                <button class="btn btn-facebook btn-login text-uppercase fw-bold" type="submit">
+                <button class="btn btn-facebook btn-login text-uppercase fw-bold" type="button">
                   <i class="fab fa-facebook-f me-2"></i> Sign in with Facebook
                 </button>
               </div>

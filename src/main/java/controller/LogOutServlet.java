@@ -1,30 +1,25 @@
 package controller;
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import dao.ListPostDao;
-import dao.PartDao;
-import model.Post;
-import model.PostPart;
+import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class contentPostCtrl
+ * Servlet implementation class LogOutServlet
  */
-@WebServlet("/contentPostCtrl")
-public class contentPostCtrl extends HttpServlet {
+@WebServlet("/LogOutServlet")
+public class LogOutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public contentPostCtrl() {
+    public LogOutServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,21 +29,17 @@ public class contentPostCtrl extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			int idpost=Integer.parseInt(request.getParameter("idpost"));
-			Post post=new ListPostDao().loadPostWithID(idpost);
-			List<PostPart> list= new PartDao().loadPart(post);
-			request.setAttribute("currentpost", post);
-			request.setAttribute("listpart", list);
-			request.getRequestDispatcher("postContent.jsp").forward(request, response);
-			
-			
-			
-			
+			HttpSession session=request.getSession();
+			session.setAttribute("currentuser", null);
+			Cookie cookie=new Cookie("remember","");
+			cookie.setMaxAge(0);
+			response.addCookie(cookie);
+			response.sendRedirect("PostController");
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.getStackTrace();
 		}
+		
 	}
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

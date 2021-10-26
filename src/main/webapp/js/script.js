@@ -114,6 +114,7 @@ function infoUser(){
 
 function loadmore(){
 	let amount=document.getElementsByClassName("post-item").length;
+	let error=document.getElementsByClassName("nomore").length;
 	$.ajax({
     		url:"/GameRule/loadMoreCtrl",
     		type:"get",
@@ -121,7 +122,13 @@ function loadmore(){
 				index:amount,
 			},
     		success:function (rs){
-    			document.getElementById("list-post").innerHTML+=rs;
+				
+				if(error>0){
+					alert("Không còn bài viết nào");
+				}else {
+					document.getElementById("list-post").innerHTML+=rs;
+				}
+				
     		},
     		error: function(xhr){
     			

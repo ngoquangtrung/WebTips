@@ -32,16 +32,17 @@ public class RegisterController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html;charset=UTF-8");
 		String email=request.getParameter("email");
 		String name=request.getParameter("name");
 		String pass=request.getParameter("pass");
 		String repass=request.getParameter("repass");
 		String date=request.getParameter("birthday");
-		String gender=request.getParameter("gender");
+		int gender=Integer.parseInt(request.getParameter("gender"));
 		PrintWriter out = response.getWriter();
 		//User uer=new User();
 		UserDao userDao=new UserDao();
-		out.println(email);
+		//out.println(email);
 		boolean invalid = false;
 		try {
 			User userexist= userDao.existUser(email);
@@ -59,18 +60,16 @@ public class RegisterController extends HttpServlet {
 			}
 			else
 			{
-				int intgender;
 				String time= java.time.LocalDateTime.now().toString();
+				/*int intgender;				
 				if(gender.equals("male")) {
 					intgender=1;
 				}else if(gender.equals("female")) {
 					intgender=0;
-				}else intgender=3;
+				}else intgender=3;*/
 				String hashpass=new HashText().getMD5(pass);			
-				User user =new User(1,name,email,hashpass,intgender,date,time,0,1);
+				User user =new User(1,name,email,hashpass,gender,date,time,0,1);
 				userDao.addUser(user);
-				out.println("success");
-				response.sendRedirect("login.jsp");
 			}
 			//request.getRequestDispatcher("register.jsp").forward(request, response);
 		} catch (Exception e) {

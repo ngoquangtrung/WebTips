@@ -11,60 +11,30 @@
 	<div class="row top-post bg-gradient-info">
 		<div class="col-md-6 latest-news post-item">
 			<img
-				src="https://static.thuthuatchoi.com/posts/images/board_game/uno/luat_rung_uno/luat%20choi%20Uno%20sai%20bet.jpg"
+				src="${postest.getSrc() }"
 				class="img-fluid">
-			<h3>7 " Luật rừng" sai bét nhè khi chơi Uno</h3>
-			<p>Có bao giờ bạn chơi UNO và bị bạn bè bắt bẻ lỗi sai ở đâu
-				không? Hiện nay Uno đang làm mưa làm gió ở thị trường trò chơi Việt
-				Nam với nhiều cách chơi biến thể khác nhau do người chơi tự nghĩ ra.
-				Chính điều đó khiến cho thi thoảng bạn có thể thấy là lạ nếu chơi
-				với một nhóm bạn mới</p>
+			<h3><a href="/GameRule/contentPostCtrl?idpost=${postest.getId_post()}&title=${postest.getTitle()}">  ${postest.getTitle()} </a></h3>
+			<p>${postest.getSummary()}</p>
 		</div>
 		<div class="col-md-6">
+		
+		<c:forEach var="p" items="${latestpost}">
+		
 			<div class=" row latest-news-item post-item">
 				<div class="col-md-4">
 					<img alt=""
-						src="https://cdn.tgdd.vn/2021/01/campaign/thumb-640x361.jpg"
+						src="${p.getSrc() }"
 						class="img-fluid img-thumbnail">
 				</div>
 				<div class="col-md-8">
-					<h4>Cờ chớp, cờ nhanh là gì ? Luật chơi cơ bản của cờ chớp, cờ
-						nhanh</h4>
-					<p>Theo quy định của Liên đoàn Cờ Vua thế giới (FIDE), thời
-						gian cho một ván cờ tiêu chuẩn là 90 phút mỗi bên, cộng 30 giây
-						cho mỗi nước đi.</p>
+					<h4><a href="/GameRule/contentPostCtrl?idpost=${p.getId_post()}&title=${p.getTitle()}">  ${p.getTitle()} </a></h4>
+					<p>${p.getSummary()}</p>
 				</div>
 			</div>
-
-			<div class=" row latest-news-item post-item">
-				<div class="col-md-4">
-					<img alt=""
-						src="https://cdn.tgdd.vn/2021/01/campaign/thumb-640x361.jpg"
-						class="img-fluid img-thumbnail">
-				</div>
-				<div class="col-md-8">
-					<h4>Cờ chớp, cờ nhanh là gì ? Luật chơi cơ bản của cờ chớp, cờ
-						nhanh</h4>
-					<p>Theo quy định của Liên đoàn Cờ Vua thế giới (FIDE), thời
-						gian cho một ván cờ tiêu chuẩn là 90 phút mỗi bên, cộng 30 giây
-						cho mỗi nước đi.</p>
-				</div>
-			</div>
-
-			<div class=" row latest-news-item post-item">
-				<div class="col-md-4">
-					<img alt=""
-						src="https://cdn.tgdd.vn/2021/01/campaign/thumb-640x361.jpg"
-						class="img-fluid img-thumbnail">
-				</div>
-				<div class="col-md-8">
-					<h4>Cờ chớp, cờ nhanh là gì ? Luật chơi cơ bản của cờ chớp, cờ
-						nhanh</h4>
-					<p>Theo quy định của Liên đoàn Cờ Vua thế giới (FIDE), thời
-						gian cho một ván cờ tiêu chuẩn là 90 phút mỗi bên, cộng 30 giây
-						cho mỗi nước đi.</p>
-				</div>
-			</div>
+			
+		
+		</c:forEach>
+		
 
 		</div>
 
@@ -77,8 +47,7 @@
 				</div>
 				<div class="col-md-9">
 					<h3>
-						<a
-							href="/GameRule/contentPostCtrl?idpost=${i.getId_post()}&title=${i.getTitle()}">${i.getTitle()}</a>
+						<a href="/GameRule/contentPostCtrl?idpost=${i.getId_post()}&title=${i.getTitle()}">${i.getTitle()}</a>
 					</h3>
 					<p>${i.getSummary()}</p>
 				</div>

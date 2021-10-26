@@ -19,6 +19,7 @@
          
 	         <div><label class="font-weight-bold">Src Thumnail</label></div>
 	         <div><p class="editcontent">${currentpost.getSrc()}</p></div>
+	         <img alt="" src="${currentpost.getSrc()}" class="img-fluid img-thumbnail">
 	         <input type="file" name="img_thumbnail">
          
 	         <div><label class="font-weight-bold">Summary</label></div>
@@ -35,6 +36,9 @@
         	</c:forEach>
           	
         </div>
+        <script type="text/javascript">
+         alert("Không có bài viết nào để hiển thị")
+        </script>
         
         </div>
 <div class="row">

@@ -2,7 +2,6 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,7 +15,6 @@ import javax.servlet.http.HttpSession;
 
 import dao.ListPostDao;
 import model.Post;
-import model.User;
 
 /**
  * Servlet implementation class PostController
@@ -38,42 +36,63 @@ public class PostController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
-		
-		PrintWriter out = response.getWriter();		
+		request.setCharacterEncoding("utf-8");
+		HttpSession session= request.getSession();
+		PrintWriter out = response.getWriter();
 		try {
-			User user= new User(1,"name","email","pass",1,"","",1,1);
-			HttpSession session=request.getSession(true);
-			session.setAttribute("currentuser", user);
+			//User user= (User) session.getAttribute("curentuser");
+			//HttpSession session=request.getSession(true);
+			//session.setAttribute("currentuser", user);
 			String type=request.getParameter("category");
-			
+			String search= request.getParameter("search");
 			if(type!=null) {
 				if(type.equals("broadgame")) {
 					List<Post> listpost=new ListPostDao().loadCategory(1);
 					session.setAttribute("listpost", listpost);
 					session.setAttribute("type", "Broad game");
 					response.sendRedirect("category.jsp");
+					if(listpost==null) {
+						out.print("<p>Không có bài viết để hiển thị</p>");
+					}
 					
 				}else if(type.equals("dangian")) {
 					List<Post> listpost=new ListPostDao().loadCategory(3);
+					if(listpost==null) {
+						out.print("<p>Không có bài viết để hiển thị</p>");
+					}
+					
 					session.setAttribute("listpost", listpost);
 					session.setAttribute("type", "Dân gian");
 					response.sendRedirect("category.jsp");
+					
 				}
 				else if(type.equals("vandong")) {
 					List<Post> listpost=new ListPostDao().loadCategory(2);
 					session.setAttribute("listpost", listpost);
 					session.setAttribute("type", "Vận động");
 					response.sendRedirect("category.jsp");
+					if(listpost==null) {
+						out.print("<p>Không có bài viết để hiển thị</p>");
+					}
 				}
 			
-			}else{
-				List<Post> list=new ListPostDao().loadPostItem(4,5);
+			}else if(search==null){
+				List<Post> list=new ListPostDao().loadPostItem(5,5);
 				List<Post> listest=new ListPostDao().loadPostItem(2,3);
 				Post latestpost= new ListPostDao().loadLatest();
 				session.setAttribute("postest", latestpost);
 				session.setAttribute("latestpost", listest);
 				session.setAttribute("postlist", list);
 				response.sendRedirect("index.jsp");
+				
+			}else if(search!=null||!search.equals("")){
+				List<Post> list=new ListPostDao().searchPost(search);
+				session.setAttribute("listpost", list);
+				session.setAttribute("type", "search for: "+search);
+				response.sendRedirect("category.jsp");
+				if(list==null) {
+					out.print("<p>Không có bài viết để hiển thị</p>");
+				}
 			}
 			
 		} catch (Exception ex) {

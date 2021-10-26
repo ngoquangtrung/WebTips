@@ -19,7 +19,7 @@ public class ListPostDao {
 	
 	public List<Post> searchPost(String character)throws Exception{
 		try {
-			String query="select * from post where title like '%"+character+"%' order by time_post desc";
+			String query="select * from post where title like '%"+character+"%' except select* from post where status_post=0 order by time_post desc ";
 			conn =new DBContext().getConnection();
 			ps=conn.prepareStatement(query);
 			rs=ps.executeQuery();
@@ -39,7 +39,7 @@ public class ListPostDao {
 	
 	public Post loadLatest() throws Exception {
 		try {
-			String query ="select top(1) * from post order by id_post desc";
+			String query ="select top(1) * from post order by id_post desc" ;
 			conn =new DBContext().getConnection();
 			ps=conn.prepareStatement(query);
 			rs=ps.executeQuery();
@@ -154,10 +154,11 @@ public class ListPostDao {
 		
 		
 		String query="exec [dbo].[sproc_addpost] ?,?,?,?,?,?,?,?";
-		
+		//String query="insert into post(title,src_img,summary,content_post,status_post,id_user,id_category,time_post) values(N?,?,?,N'?',?,?,?,?)" ;
+				
 		conn=new DBContext().getConnection();
 		ps=conn.prepareStatement(query);
-		ps.setString(1, title);
+		ps.setString(1,title);
 		ps.setString(2,src);
 		ps.setString(3,summary);
 		ps.setString(4,content);

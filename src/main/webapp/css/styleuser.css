@@ -43,10 +43,11 @@ body {
 }
 .tabOption{
 padding-left: 10%;
+ padding-top: 16px;
 }
 .tabOption:hover{
 	 background: #58aafc;
-	 padding-top: 16px;
+	
 	 color:white;
 }
 .add-experience:hover {

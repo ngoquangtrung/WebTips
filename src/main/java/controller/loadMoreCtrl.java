@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.jasper.tagplugins.jstl.core.ForEach;
-
 import dao.ListPostDao;
 import model.Post;
 
@@ -38,7 +36,10 @@ public class loadMoreCtrl extends HttpServlet {
 		int index=Integer.parseInt(request.getParameter("index"));
 		PrintWriter out= response.getWriter();
 		try {
-			List<Post> list= new ListPostDao().loadPostItem(index,5);
+			List<Post> list= new ListPostDao().loadPostItem(index+1,5);
+			if(list==null || list.size() == 0) {
+				out.print("<p class='nomore'> Không còn bài viết nào</p>");
+			}else {
 			for (Post post : list) {
 				out.print("<div id=\""+post.getId_post()+"\" class=\"row post-item\" onlcik=\" \" >\r\n"
 						+ "	    <div class=\"col-md-3\">\r\n"
@@ -49,6 +50,7 @@ public class loadMoreCtrl extends HttpServlet {
 						+ "		<p>"+post.getSummary()+"</p>\r\n"
 						+ "    	</div>\r\n"
 						+ "    </div>");
+			}
 			}
 			
 		} catch (Exception e) {
@@ -63,7 +65,7 @@ public class loadMoreCtrl extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 		doGet(request, response);
 	}
 

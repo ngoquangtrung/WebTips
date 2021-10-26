@@ -1,6 +1,5 @@
 package dao;
 
-import java.awt.geom.RectangularShape;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,14 +15,6 @@ public class UserDao {
 	
 	public void addUser(User user) throws Exception{
 		try {
-			String name=user.getName();
-			String email=user.getEmail();
-			String pass= user.getPass();
-			int gender=user.getGender();
-			String bday=user.getBirthday();
-			String time=user.getTimeup();
-			int permission=user.getPermission();
-			int status=user.getStatus();
 			
 		String query="exec dbo.sproc_adduser ?,?,?,?,?,?,?";	
 		//String query="insert into [dbo].[user](name_user,email,pass,gender,birthday,time_up,permission,status_user) values(?,?,?,?,?,?,?,?)"; 
@@ -64,6 +55,12 @@ public class UserDao {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+		}
 		
 	}
 	
@@ -82,6 +79,12 @@ public class UserDao {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+		}
 		return null;		
 	}
 	
@@ -99,7 +102,39 @@ public class UserDao {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+		}
 		return null;
+	}
+	
+	public void updateUser(User user) throws Exception{
+		try {
+			String query="exec sproc_updateUser ?,?,?,?,?,?,?,?";
+			conn=new DBContext().getConnection();
+			ps=conn.prepareStatement(query);
+			ps.setInt(1, user.getIduser());
+			ps.setString(3, user.getEmail());
+			ps.setString(2,user.getName() );
+			ps.setString(4,user.getPass());
+			ps.setInt(5,user.getGender());
+			ps.setString(6, user.getBirthday());
+			ps.setInt(7, user.getPermission());
+			ps.setInt(8, user.getStatus());
+			
+			ps.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+		}
 	}
 	
 	

@@ -48,8 +48,8 @@
         <a class="nav-link" href="#">About</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <form class="form-inline my-2 my-lg-0" method="post" action="/GameRule/">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
     <ul class="navbar-nav">
@@ -58,9 +58,20 @@
           Account
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">User Name</a>
+          
+          
+          <c:set var="user" value="${currentuser.getName()}"></c:set>
+          <c:if test="${user!=null }">
+          <a class="dropdown-item" href="">${user}</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="/GameRule/user.jsp">Login </a>
+          <a class="dropdown-item" href="/GameRule/LogOutServlet">Logout </a>
+          </c:if>          
+			<c:if test="${user==null }">
+			<a class="dropdown-item" href="/GameRule/CheckCookie">Login </a>
+			<div class="dropdown-divider"></div>
+			</c:if>
+          
+          
         </div>
       </li>
     </ul>
