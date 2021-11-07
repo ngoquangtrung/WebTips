@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import dao.UserDao;
 import model.HashText;
+import model.Post;
 import model.User;
 
 /**
@@ -41,13 +42,22 @@ public class LoginServlet extends HttpServlet {
 		String remember=request.getParameter("remember");
 		UserDao userDao=new UserDao();
 		try {	String hashpass=new HashText().getMD5(pass);
-				User user=userDao.checkUser(email, hashpass);
+				User user=userDao.checkUser(email, hashpass);				
 				if(user==null) {
 					request.setAttribute("loginerror", "Thông tin sai, vui lòng kiểm tra lại");
 					request.getRequestDispatcher("login.jsp").forward(request, response);
 				}else {
+					int status =user.getStatus();
+					if(status==0) {
+						request.setAttribute("usererror", "Tài khoản đã bị khóa");
+						request.getRequestDispatcher("login.jsp").forward(request, response);
+						return;
+					}
+					
+					
 					HttpSession session= request.getSession();
 					session.setAttribute("currentuser", user);
+					//int permission=user.getPermission();
 					if (remember != null) {
 						Cookie cookie=new Cookie("remember",user.getEmail());
 						cookie.setMaxAge(60*60*24*7);
@@ -57,8 +67,19 @@ public class LoginServlet extends HttpServlet {
 						cookie.setMaxAge(0);
 						response.addCookie(cookie);
 					}
-					response.sendRedirect("user.jsp");
-					
+					Post viewpost=(Post) session.getAttribute("viewpost");
+					if(viewpost==null) {
+						response.sendRedirect("main");
+					}else {
+						response.sendRedirect("contentPostCtrl?idpost="+viewpost.getId_post()+"&title="+viewpost.getTitle());
+					}
+					/*if(permission==0) {
+						response.sendRedirect("user.jsp");
+					}
+					else {
+						response.sendRedirect("adminuser.jsp");
+					}*/
+										
 				}
 			
 			

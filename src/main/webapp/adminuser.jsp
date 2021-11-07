@@ -15,6 +15,8 @@
         		<div class="col-md-12 border-bottom tabOption"  onclick="infoUser()"><p>Information</p> </div>
         		<div class="col-md-12 border-bottom tabOption" onclick="listPost()"><p>Post</p> </div>
         		<div class="col-md-12 border-bottom tabOption"><p>Comment</p> </div>
+        		<div class="col-md-12 border-bottom tabOption" onclick="screenuser()"><p>List user</p></div>
+        		<div class="col-md-12 border-bottom tabOption" onclick="listPostRequest()"><p>List post request</p> </div>
         	</div>
         </div>
         

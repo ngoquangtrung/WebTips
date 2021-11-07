@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import context.DBContext;
 import model.User;
@@ -44,13 +46,14 @@ public class UserDao {
 		}
 	}
 	
-	public void deleteUser(int id) {
+	public void deleteUser(int id,int status) {
 		
 		try {
-			String query="exec sp_deleteuser ?";
+			String query="exec sproc_activeUser ?,?";
 			conn=new DBContext().getConnection();
 			ps=conn.prepareStatement(query);
-			ps.setInt(0, id);
+			ps.setInt(1, id);
+			ps.setInt(2, status);
 			ps.executeUpdate();
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -135,6 +138,27 @@ public class UserDao {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
 		}
+	}
+	
+	public List<User> selectUserStatus(int status) throws Exception {
+		try {
+			String query="select* from [dbo].[user] where status_user=? ";
+			conn=new DBContext().getConnection();
+			ps=conn.prepareStatement(query);
+			ps.setInt(1, status);
+			rs=ps.executeQuery();
+			List<User> list= new ArrayList<>();
+			while(rs.next()) {
+				User user=new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getString(6),rs.getString(7),rs.getInt(8),rs.getInt(9));
+				list.add(user);
+			}
+			return list;
+			
+			
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
+		return null;
 	}
 	
 	

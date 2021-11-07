@@ -47,11 +47,20 @@ public class CheckCookie extends HttpServlet {
 					try {
 						user = userDao.existUser(email);
 						session.setAttribute("currentuser",user);
+						/*int permisson=user.getPermission();
+						if(permisson==0) {
+							response.sendRedirect("user.jsp");
+						}else {
+							response.sendRedirect("adminuser.jsp");
+						}*/
+						
+						response.sendRedirect("/GameRule/main");
+						return;
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-					response.sendRedirect("user.jsp");
-					return;
+					//response.sendRedirect("user.jsp");
+					//return;
 				}
 			}
 			response.sendRedirect("login.jsp");

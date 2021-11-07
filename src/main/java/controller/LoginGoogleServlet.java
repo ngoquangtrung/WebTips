@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import dao.UserDao;
 import model.HashText;
+import model.Post;
 import model.User;
 import stackjava.GooglePojo;
 import stackjava.GoogleUtils;
@@ -57,7 +57,22 @@ public class LoginGoogleServlet extends HttpServlet {
 				userDao.addUser(user);
 			}
 			session.setAttribute("currentuser", user);
-			response.sendRedirect("user.jsp");
+			/*int permission=user.getPermission();
+			if(permission==0) {
+				response.sendRedirect("user.jsp");
+			}else {
+				response.sendRedirect("adminuser.jsp");
+			}*/
+			Post viewpost=(Post) session.getAttribute("viewpost");
+			if(viewpost==null) {
+				response.sendRedirect("main");
+			}else {
+				response.sendRedirect("contentPostCtrl?idpost="+viewpost.getId_post()+"&title="+viewpost.getTitle());
+			}
+			
+			
+			
+			//response.sendRedirect("user.jsp");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

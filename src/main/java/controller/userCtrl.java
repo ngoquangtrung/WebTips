@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,7 +33,30 @@ public class userCtrl extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.getRequestDispatcher("screen/infoUser.jsp").forward(request, response);
+		try {
+			String action= request.getParameter("action");			
+			
+			
+			if(action.equals("showlist")) {
+				
+				
+				
+				
+				return;
+			}
+			if(action.equals("delete")) {
+				
+				
+				
+				
+				
+				return;
+			}
+			
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
+		
 	}
 
 	/**
@@ -48,32 +70,41 @@ public class userCtrl extends HttpServlet {
 		String pass=request.getParameter("password");
 		String repass=request.getParameter("repassword");
 		String birthday=request.getParameter("birthday");
-		int gender=Integer.parseInt(request.getParameter("genderuser"));
+		int gender=Integer.parseInt(request.getParameter("genderuser"));	
+			
+		UserDao userDao=new UserDao();
+		User user=(User) session.getAttribute("currentuser");
+		user.setName(name);
+		user.setGender(gender);
+		user.setBirthday(birthday);		
 		
-		String hashpass=new HashText().getMD5(pass);
-		
-		if(pass.equals(repass)) {
-			UserDao userDao=new UserDao();
-			User user=(User) session.getAttribute("currentuser");
-			
-			user.setName(name);
-			user.setGender(gender);
-			user.setPass(hashpass);
-			user.setBirthday(birthday);
-			
-			try {
-				userDao.updateUser(user);
-				session.setAttribute("currentuser", user);				
-				response.sendRedirect("user.jsp");
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-		}else {
-			request.setAttribute("passerror","Mật khẩu không khớp");
-			request.getRequestDispatcher("user.jsp").forward(request, response);
+		if(!pass.trim().equals("")||!pass.trim().isEmpty()) {
+			String hashpass=new HashText().getMD5(pass);
+			if(pass.equals(repass)) {
+				user.setPass(hashpass);
+			}else {
+				request.setAttribute("passerror","Mật khẩu không khớp");
+				request.getRequestDispatcher("user.jsp").forward(request, response);
+				return;
+			}			
 		}
+		try {
+			userDao.updateUser(user);
+			session.setAttribute("currentuser", user);				
+			//response.sendRedirect("user.jsp");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if(user.getPermission()==0) {
+			response.sendRedirect("user.jsp");
+		}else {
+			response.sendRedirect("adminuser.jsp");
+		}
+		
+		
+		
+		
 		
 		
 		

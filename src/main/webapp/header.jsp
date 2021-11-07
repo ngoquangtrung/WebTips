@@ -60,13 +60,19 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           
           
-          <c:set var="user" value="${currentuser.getName()}"></c:set>
-          <c:if test="${user!=null }">
-          <a class="dropdown-item" href="">${user}</a>
+          <c:set var="username" value="${currentuser.getName()}"></c:set>
+          <c:set var="permission" value="${currentuser.getPermission() }"></c:set>
+          <c:if test="${username!=null }">
+          <c:if test="${permission==0 }">
+          <a class="dropdown-item" href="/GameRule/user.jsp">${username}</a>
+          </c:if>
+          <c:if test="${permission==1 }">
+          <a class="dropdown-item" href="/GameRule/adminuser.jsp">${username}</a>
+          </c:if>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="/GameRule/LogOutServlet">Logout </a>
           </c:if>          
-			<c:if test="${user==null }">
+			<c:if test="${username==null }">
 			<a class="dropdown-item" href="/GameRule/CheckCookie">Login </a>
 			<div class="dropdown-divider"></div>
 			</c:if>

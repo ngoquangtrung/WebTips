@@ -8,7 +8,7 @@
         
 </div>        
  <form action="/GameRule/UpdatePostCtrl" method="get" id="fromlistpost" onsubmit="return confirmdelete()">
-<c:forEach var="i" items="${listuser}">
+<c:forEach var="i" items="${listcmt}">
 <div class="row post-item" id="${i.getId_post()}">
         <div class="col-md-3 post-item">
         <img alt="" src="${i.getSrc() }" class="img-fluid" onclick="detailPost(${i.getId_post()})">

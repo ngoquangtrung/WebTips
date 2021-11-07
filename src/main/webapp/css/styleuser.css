@@ -90,3 +90,18 @@ a:hover, a:visited, a:link, a:active
 .text-white{
 	color:white;
 }
+.useritem{
+	margin-top: 10px;
+}
+.invisible{
+	display: none;
+}
+#contentcmt{
+	resize:none;
+}
+.pointer{
+	cursor:pointer;
+}
+.repzone{
+	margin-left: 10%;
+}

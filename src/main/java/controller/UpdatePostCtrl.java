@@ -18,6 +18,7 @@ import dao.ListPostDao;
 import dao.PartDao;
 import model.Post;
 import model.PostPart;
+import model.User;
 
 /**
  * Servlet implementation class UpdatePostCtrl
@@ -43,16 +44,17 @@ public class UpdatePostCtrl extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String action = request.getParameter("action");
+		
 		try {
 			HttpSession session = request.getSession(true);
+			User user=(User) session.getAttribute("currentuser");
 			Post post = (Post) session.getAttribute("currentpost");
 			List<Post> list = (List<Post>) session.getAttribute("listuser");
 			PrintWriter out = response.getWriter();
-			if (action == null) {
+			if (action == null||action.equals("")) {
 				for (Post p : list) {
 					int id = p.getId_post();
-					// PrintWriter out=response.getWriter();
-					//out.print("id " + id);
+					out.print("id " + id);
 					String value = request.getParameter("check_box_" + id);
 					if (value != null) {
 						out.print(p.getTitle());
@@ -60,14 +62,22 @@ public class UpdatePostCtrl extends HttpServlet {
 						ListPostDao lpdao = new ListPostDao();
 						lpdao.updatePost(p);
 					}
-					response.sendRedirect("user.jsp");
+					//response.sendRedirect("user.jsp");
 				}
+				//response.sendRedirect("user.jsp");
 			} else if (action.equals("delete")) {
 				post.setStatus(0);
 				ListPostDao lpdao = new ListPostDao();
 				lpdao.updatePost(post);
-				response.sendRedirect("user.jsp");
+				session.setAttribute("currentpost", null);
+				//response.sendRedirect("user.jsp");
 			}
+			if(user.getPermission()==0) {
+				response.sendRedirect("user.jsp");
+			}else {
+				response.sendRedirect("adminuser.jsp");
+			}
+			
 
 		} catch (Exception e) {
 			// TODO: handle exception

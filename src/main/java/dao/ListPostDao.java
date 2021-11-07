@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import context.DBContext;
@@ -16,7 +19,7 @@ public class ListPostDao {
 	private Connection conn=null;
 	private PreparedStatement ps =null;
 	private ResultSet rs=null;
-	
+	private Date date=null;	
 	public List<Post> searchPost(String character)throws Exception{
 		try {
 			String query="select * from post where title like '%"+character+"%' except select* from post where status_post=0 order by time_post desc ";
@@ -25,7 +28,11 @@ public class ListPostDao {
 			rs=ps.executeQuery();
 			List<Post> list=new ArrayList<Post>();
 			while(rs.next()) {
-				Post post=new Post(rs.getInt(1),rs.getString(9),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getInt(6),rs.getInt(7),rs.getString(8));
+				date=rs.getDate(8);
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+				String timeString=formatter.format(date);
+				
+				Post post=new Post(rs.getInt(1),rs.getString(9),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getInt(6),rs.getInt(7),timeString);
 				list.add(post);
 			}
 			
@@ -105,8 +112,14 @@ public class ListPostDao {
 			ps.setInt(1, id);
 			rs=ps.executeQuery();
 			while(rs.next()) {
-				Post post=new Post(rs.getInt(1),rs.getString(9),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getInt(6),rs.getInt(7),rs.getString(8));
+				date=rs.getDate(8);
+				Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+				String timeString=formatter.format(date);
+				
+				Post post=new Post(rs.getInt(1),rs.getString(9),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getInt(6),rs.getInt(7),timeString);
 				list.add(post);
+				//Post post=new Post(rs.getInt(1),rs.getString(9),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getInt(6),rs.getInt(7),timeString);
+				//list.add(post);
 			}
 			return list;
 			
@@ -208,7 +221,37 @@ public class ListPostDao {
 		}
 	}
 	
-	
+	public List<Post> loadPostofStatus(User user, int status)  throws Exception{
+		
+		try {
+			
+			String query="select*from post where id_user=? and status_post=? order by time_post desc";
+			conn=new DBContext().getConnection();
+			ps=conn.prepareStatement(query);
+			ps.setInt(1, user.getIduser());
+			ps.setInt(2, status);
+			rs=ps.executeQuery();
+			List<Post> list=new ArrayList<Post>();
+			while(rs.next()) {
+				
+				date=rs.getDate(8);
+				Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+				String timeString =formatter.format(date);
+				
+				Post post=new Post(rs.getInt(1),rs.getString(9),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getInt(6),rs.getInt(7),timeString);
+				list.add(post);
+			}
+			return list;
+		} catch (Exception e) {
+			e.getStackTrace();
+			// TODO: handle exception
+		}
+		
+		
+		
+		
+		return null;
+	}
 	
 	public void deletePost(Post post) {
 		try {
@@ -221,6 +264,33 @@ public class ListPostDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	
+	
+	public List<Post> loadeRequestPost() throws Exception {
+		try {
+			String query="select*from post where status_post=2 order by time_post desc";
+			conn=new DBContext().getConnection();
+			ps=conn.prepareStatement(query);
+			rs=ps.executeQuery();
+			List<Post> list=new ArrayList<Post>();
+			while(rs.next()) {
+				
+				date=rs.getDate(8);
+				Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+				String timeString=formatter.format(date);
+				
+				Post post=new Post(rs.getInt(1),rs.getString(9),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getInt(6),rs.getInt(7),timeString);
+				list.add(post);
+			}
+			return list;
+			
+		} catch (Exception e) {
+			e.getStackTrace();
+			// TODO: handle exception
+		}
+		return null;
 	}
 
 }

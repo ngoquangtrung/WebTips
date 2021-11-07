@@ -3,6 +3,8 @@ package controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -82,7 +84,19 @@ public class AddPostCtrl extends HttpServlet {
 		        String file_path= fullSavePath +File.separator + namefile;
 		        part.write(file_path);
 		        String src= "/GameRule/"+SAVE_DIRECTORY+"\\"+namefile;
-		        String time= java.time.LocalDateTime.now().toString();
+		        
+		        LocalDateTime currenttime= LocalDateTime.now();
+		        
+		        //SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		        String time= formatter.format(currenttime);
+		        
+		        
+		        
+		        //String time= java.time.LocalDateTime.now().toString();
+		       
+		        
+		        
 		        Post post=new Post(1,title,src,summary,"",2,user.getIduser(),category,time);
 		        Logger.getLogger(PostController.class.getName()).log(Level.SEVERE,null,"title"+post.getTitle() );
 		        ListPostDao postdao =new ListPostDao();
@@ -111,8 +125,12 @@ public class AddPostCtrl extends HttpServlet {
 			        	partdao.addPart(postlatest, post_part);
 		        	}    
 		        }
+		        if(user.getPermission()==0) {
+		        	response.sendRedirect("user.jsp");
+		        }else {
+		        	response.sendRedirect("adminuser.jsp");
+		        }
 		        
-		        response.sendRedirect("user.jsp");
 		        
 			
 		} catch (Exception e) {

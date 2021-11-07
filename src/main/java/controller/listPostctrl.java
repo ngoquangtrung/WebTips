@@ -41,9 +41,9 @@ public class listPostctrl extends HttpServlet {
 		User user = (User) session.getAttribute("currentuser");
 		
 		try {
-			List<Post> list = new ListPostDao().loadPostUser(user);
+			List<Post> list = new ListPostDao().loadPostofStatus(user, 1);
 			session.setAttribute("listuser", list);
-			request.getRequestDispatcher("screen/listPost.jsp").forward(request, response);			
+			request.getRequestDispatcher("screen/listPost.jsp").forward(request, response);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
