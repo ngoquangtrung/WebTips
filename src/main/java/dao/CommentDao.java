@@ -45,13 +45,12 @@ public class CommentDao {
 		
 	}
 	
-	public void deleteComment(Comment comment) throws Exception{
+	public void deleteComment(Integer idcmt) throws Exception{
 		conn=new DBContext().getConnection();
-		String query="exec [dbo].[sproc_deletecmt] ?,?";
+		String query="exec [dbo].[sproc_deletecmt] ?";
 		
 		ps=conn.prepareStatement(query);
-		ps.setInt(1, comment.getIduser());
-		ps.setInt(2, comment.getIdpost());
+		ps.setInt(1, idcmt);
 		ps.executeUpdate();
 		
 	}
@@ -108,22 +107,118 @@ public class CommentDao {
 	
 	public List<Comment> listCmtofUser(User user) throws Exception{
 		try {
-			String query="select*from commentinfo where id_user=?";
+			String query="exec sproc_commmentofuser ?";
 			conn=new DBContext().getConnection();
 			ps=conn.prepareStatement(query);
 			ps.setInt(1, user.getIduser());
-			List<Comment> list=new ArrayList<Comment>();
 			rs=ps.executeQuery();
+			List<Comment> list=new ArrayList<Comment>();
 			while(rs.next()) {
-				Comment cmt = new Comment(rs.getInt(2),rs.getInt(3),rs.getString(4),rs.getString(5),rs.getInt(6),rs.getString(user.getName()),rs.getInt(7),rs.getInt(1));
+				Comment cmt = new Comment(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getString(4),rs.getString(5),rs.getString(6));
 				list.add(cmt);
 			}
-			
+			return list;
 		} catch (Exception e) {
 			e.getStackTrace();
 		}
+		try {
+			conn.close();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 		return null;
 	}
 	
 	
+	public boolean checklikedcmt(User user, Comment cmt) throws Exception {
+		try {
+			String query="select*from likecmt where id_user=? and id_comment=?";
+			conn=new DBContext().getConnection();
+			ps=conn.prepareStatement(query);
+			
+			ps.setInt(1, user.getIduser());
+			ps.setInt(2, cmt.getIdcmt());
+			rs=ps.executeQuery();
+			while(rs.next()) {				
+				return true;
+			}
+			
+			
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
+		
+		try {
+			conn.close();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		
+		return false;
+	}
+	
+	public void likecmt(int iduser,int idcmt,String time) throws Exception {
+		try {
+			String query="insert into likecmt values(?,?,?)";
+			conn=new DBContext().getConnection();
+			ps=conn.prepareStatement(query);
+			ps.setInt(1, iduser);
+			ps.setInt(2, idcmt);
+			ps.setString(3, time);
+			ps.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.getStackTrace();
+		}
+		try {
+			conn.close();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+	}
+	
+	public void unlikecmt(int iduser,int idcmt) throws Exception {
+		String query="delete likecmt where id_user=? and id_comment=?";
+		try {
+			conn=new DBContext().getConnection();
+			ps=conn.prepareStatement(query);
+			ps.setInt(1, iduser);
+			ps.setInt(2, idcmt);
+			ps.executeUpdate();
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			conn.close();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+	}
+	public int countlike(int idcmt) throws Exception {
+		try {
+			String query="select COUNT(id_user) from likecmt where id_comment=?";
+			conn=new DBContext().getConnection();
+			ps=conn.prepareStatement(query);
+			ps.setInt(1, idcmt);
+			
+			rs=ps.executeQuery();
+			while(rs.next()) {
+				return rs.getInt(1);
+			}
+						
+			
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
+		try {
+			conn.close();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		return 0;
+	}
 }

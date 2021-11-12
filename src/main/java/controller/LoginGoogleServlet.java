@@ -53,7 +53,7 @@ public class LoginGoogleServlet extends HttpServlet {
 				String time= java.time.LocalDateTime.now().toString();
 				String hashpass=new HashText().getMD5(googlePojo.getId());
 				String email=googlePojo.getEmail();
-				user=new User(1,"Google User",email,hashpass,3,"",time,0,1);
+				user=new User(1,"Google User",email,hashpass,3,"",time,0,1,null);
 				userDao.addUser(user);
 			}
 			session.setAttribute("currentuser", user);

@@ -8,7 +8,7 @@
         
 </div>        
  <form action="/GameRule/UpdatePostCtrl" method="get" id="fromlistpost" onsubmit="return confirmdelete()">
-<c:forEach var="i" items="${listuser}">
+<c:forEach var="i" items="${listpost}">
 <div class="row post-item" id="${i.getId_post()}">
         <div class="col-md-3 post-item">
         <img alt="" src="${i.getSrc() }" class="img-fluid" onclick="detailPost(${i.getId_post()})">
@@ -18,14 +18,15 @@
             	<div><span class="text-black-50">${i.getTime()}</span></div>
         </div>
         <div class="col-md-1">
-        <input type="checkbox" name="check_box_${i.getId_post()}" value="${i.getId_post()}">
+        <input type="checkbox" name="checkbox_${i.getId_post()}" value="${i.getId_post()}" id="checkbox_${i.getId_post()}">
         </div>
         
  </div>
 </c:forEach>        
        <div class="row" >
         <div class="col-md-12 align-items-center text-center createpost">
-        <button class="btn btn-danger my-2 my-sm-0" type="submit">Delect all selected</button>
+        <c:set var="listId" value="${listid}"></c:set>
+        <button class="btn btn-danger my-2 my-sm-0" type="button" onclick="deletePostselected(${listId})">Delect all selected</button>
         </div>
         
 </div> 

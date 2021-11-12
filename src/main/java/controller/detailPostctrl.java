@@ -42,8 +42,10 @@ public class detailPostctrl extends HttpServlet {
 			
 			HttpSession session=request.getSession(true);
 			
-			session.setAttribute("currentpost", post);
+			//session.setAttribute("currentpost", post);
+			request.setAttribute("currentpost", post);
 			session.setAttribute("listpart", list);
+			request.setAttribute("idpost", id_post);
 			request.getRequestDispatcher("screen/detailPost.jsp").forward(request, response);
 			
 		} catch (Exception e) {

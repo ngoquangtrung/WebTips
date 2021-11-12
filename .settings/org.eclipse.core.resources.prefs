@@ -1,9 +1,11 @@
 eclipse.preferences.version=1
 encoding//src/main/java/controller/CmtCtrl.java=UTF-8
 encoding//src/main/java/controller/ForgotPassword.java=UTF-8
+encoding//src/main/java/controller/LikeCtrl.java=UTF-8
 encoding//src/main/java/controller/LoginServlet.java=UTF-8
 encoding//src/main/java/controller/PostController.java=UTF-8
 encoding//src/main/java/controller/RegisterController.java=UTF-8
+encoding//src/main/java/controller/SendEmailGoogle.java=UTF-8
 encoding//src/main/java/controller/loadMoreCtrl.java=UTF-8
 encoding//src/main/java/controller/userCtrl.java=UTF-8
 encoding//src/main/webapp/login.jsp=UTF-8

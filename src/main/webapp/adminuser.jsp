@@ -6,7 +6,8 @@
 <c:import url="header.jsp">
 <c:param name="title" value="Account manager"></c:param>
 </c:import>
-
+<c:set var="user" value="${currentuser}"></c:set>
+<c:if test="${user!=null }">
 <div class="container rounded bg-white mt-5 mb-5">
     <div class="row">
         <div class="col-md-3 border-right">
@@ -14,7 +15,7 @@
         	<div class="row mt-2">
         		<div class="col-md-12 border-bottom tabOption"  onclick="infoUser()"><p>Information</p> </div>
         		<div class="col-md-12 border-bottom tabOption" onclick="listPost()"><p>Post</p> </div>
-        		<div class="col-md-12 border-bottom tabOption"><p>Comment</p> </div>
+        		<div class="col-md-12 border-bottom tabOption" onclick="listComment()"><p>Comment</p> </div>
         		<div class="col-md-12 border-bottom tabOption" onclick="screenuser()"><p>List user</p></div>
         		<div class="col-md-12 border-bottom tabOption" onclick="listPostRequest()"><p>List post request</p> </div>
         	</div>
@@ -78,5 +79,6 @@
         </div>        
     </div>
 </div>
+</c:if>
 </body>
 </html>

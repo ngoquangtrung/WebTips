@@ -25,7 +25,7 @@
 	         <div><label class="font-weight-bold">Summary</label></div>
 	         <div><textarea rows="5" cols="40" class="editcontent" name="summary">${currentpost.getSummary()}</textarea></div>
 	        
-        	<c:forEach var="i" items="${listpart}">        	
+        	<c:forEach var="i" items="${listpart}">
         	<div><label class="font-weight-bold">Part</label></div>
         	<div><label class="font-weight-bold">Image</label></div>
         	<input type="file" name="img_${i.getId_part()}">
@@ -36,15 +36,13 @@
         	</c:forEach>
           	
         </div>
-        <script type="text/javascript">
-         alert("Không có bài viết nào để hiển thị")
-        </script>
-        
+                
         </div>
 <div class="row">
 	<div class="col-md-8"></div>
-		<div class="col-md-2 align-items-center text-center"> <button type="submit" class="btn btn-success btnsetup">Update</button></div>
-	  	<div class="col-md-2 align-items-center text-center"> <button type="button" class="btn btn-danger btnsetup" id="btn_deletePost">Delete </button></div>
+	<c:set var="iddelete" value="${idpost}"></c:set>
+		<div class="col-md-2 align-items-center text-center"> <button type="submit" class="btn btn-success btnsetup" id="btn_updatepost">Update</button></div>
+	  	<div class="col-md-2 align-items-center text-center"> <button type="button" class="btn btn-danger btnsetup" id="btn_deletePost" onclick="deletePost(${iddelete})">Delete </button></div>
 	  
         
 </div>

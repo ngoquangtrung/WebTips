@@ -21,7 +21,12 @@
 		<c:set var="active" value="${i.getStatus() }"></c:set>
 		<c:if test="${active==1}">
 		<div class="col-md-2">
-		<button onclick="deleteUser(${i.getIduser()})" class="btn btn-danger">Delete</button>
+		<c:if test="${permission==0}">
+		<button onclick="uptoAdmin(${i.getIduser()})" class="btn btn-success" style="width:80px;margin-bottom:10px;">Up</button>
+		</c:if>
+		<button onclick="deleteUser(${i.getIduser()})" class="btn btn-danger" style="width:80px">Delete</button>
+		
+		
 		 </div>
 		</c:if>
 		<c:if test="${active==0}">

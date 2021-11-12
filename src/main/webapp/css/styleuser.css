@@ -99,9 +99,20 @@ a:hover, a:visited, a:link, a:active
 #contentcmt{
 	resize:none;
 }
+
+.commentarea{
+	width:80%;
+}
 .pointer{
 	cursor:pointer;
 }
 .repzone{
 	margin-left: 10%;
+}
+
+.cursor:hover{
+	color: blue;	
+}
+.shadow-none{
+	box-shadow: none;
 }

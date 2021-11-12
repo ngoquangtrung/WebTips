@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
 		String remember=request.getParameter("remember");
 		UserDao userDao=new UserDao();
 		try {	String hashpass=new HashText().getMD5(pass);
-				User user=userDao.checkUser(email, hashpass);				
+				User user=userDao.checkUser(email, hashpass);		
 				if(user==null) {
 					request.setAttribute("loginerror", "Thông tin sai, vui lòng kiểm tra lại");
 					request.getRequestDispatcher("login.jsp").forward(request, response);
@@ -56,6 +56,9 @@ public class LoginServlet extends HttpServlet {
 					
 					
 					HttpSession session= request.getSession();
+					
+					//test hinh dai dien khi khong co
+					
 					session.setAttribute("currentuser", user);
 					//int permission=user.getPermission();
 					if (remember != null) {

@@ -34,24 +34,9 @@ public class userCtrl extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		try {
-			String action= request.getParameter("action");			
-			
-			
-			if(action.equals("showlist")) {
-				
-				
-				
-				
-				return;
-			}
-			if(action.equals("delete")) {
-				
-				
-				
-				
-				
-				return;
-			}
+			int idpost=Integer.parseInt(request.getParameter("iduser"));
+			UserDao userDao=new UserDao();
+			userDao.uptoAdmin(idpost);
 			
 		} catch (Exception e) {
 			e.getStackTrace();

@@ -45,6 +45,7 @@ public class PostController extends HttpServlet {
 			//session.setAttribute("currentuser", user);
 			String type=request.getParameter("category");
 			String search= request.getParameter("search");
+			session.setAttribute("viewpost", null);
 			if(type!=null) {
 				if(type.equals("broadgame")) {
 					List<Post> listpost=new ListPostDao().loadCategory(1);

@@ -27,7 +27,7 @@
         <div class="card border-0 shadow rounded-3 my-5">
           <div class="card-body p-4 p-sm-5">
             <h5 class="card-title text-center mb-5 fw-light fs-5">Forgot Password</h5>
-            <form action="/GameRule/ForgotPassword" method="post">
+            <form action="/GameRule/SendEmailGoogle" method="post">
               <div class="form-floating mb-3">
                <label for="floatingInput">Email address</label>
                 <input type="email" class="form-control" id="email" placeholder="name@example.com" name="email" required>

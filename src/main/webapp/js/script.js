@@ -74,15 +74,15 @@ function detailPost(id){
 			},
     		success:function (rs){
     			document.getElementById("replace").innerHTML=rs;
-			$('#btn_deletePost').click(function(){
-				if(confirm("Có chắc chắn xóa")){
-				alert("Đã xóa bài viết");	
+			/*$('#btn_deletePost').click(function(){
+				if(confirm("Có chắc chắn xóa")){				
 				$(location).attr('href',"/GameRule/UpdatePostCtrl?action=delete")
+				alert("Đã xóa bài viết");	
 	    }
 	    else{
 	        return false;
 	    }
-				});
+				});*/
     		},
     		error: function(xhr){
     			
@@ -228,6 +228,41 @@ function loadListuser(){
     	})
 };
 
+function uptoAdmin(iduser){
+	$.ajax({
+    		url:"/GameRule/userCtrl",
+    		type:"get",
+			data:{
+				iduser:iduser,
+			},
+    		success:function (rs){
+					let selectbox=document.getElementById("selectstatus");
+					let userstatus=selectbox.options[selectbox.selectedIndex].value;
+		
+					$.ajax({
+			    		url:"/GameRule/ListUserCtrl",
+			    		type:"get",
+						data:{
+							status:userstatus,
+						},
+			    		success:function (rs){
+							
+							document.getElementById("listuser").innerHTML=rs;
+							
+			    		},
+			    		error: function(xhr){
+			    			
+			    		}
+    				})
+	
+    		},
+    		error: function(xhr){
+    			
+    		}
+    	});
+}
+
+
 function deleteUser(id){
 	let selectbox=document.getElementById("selectstatus");
 	let userstatus=selectbox.options[selectbox.selectedIndex].value;
@@ -369,4 +404,175 @@ function sendrep(idrepcmt){
     		}
     	});
 };
+function listComment(){
+	$.ajax({
+    		url:"/GameRule/CmtCtrl",
+    		type:"get",
+			data:{
+				
+			},
+    		success:function (rs){
+    			document.getElementById("replace").innerHTML=rs;			
 
+
+    		},
+    		error: function(xhr){
+    			$(location).attr('href',"/GameRule/login.jsp")
+    		}
+    	})
+};
+function deleteCmt(listid){
+	if(confirm("Có chắc chắn xóa")){
+	
+					let listdelete=new Array();
+					for(let i=0;i<listid.length;i++){
+						let idcheckbox="check_box_"+ listid[i];
+						if(document.getElementById(idcheckbox).checked==true){
+							listdelete.push(listid[i]);
+						}
+						
+					}
+					$.ajax({
+			    		url:"/GameRule/DeleteCmt",
+			    		type:"post",
+						data:{
+							'idList': listdelete
+						},
+			    		success:function (rs){
+							document.getElementById("replace").innerHTML=rs;
+			    		},
+			    		error: function(xhr){
+			    			
+			    		}
+		    		});
+				alert("Đã xóa các bình luận được chọn");
+				}
+		else{
+			return false;
+		}
+};
+				
+function deletePostselected(listid){
+	if(confirm("Có chắc chắn xóa")){
+		
+					let listdelete=new Array();
+					for(let i=0;i<listid.length;i++){
+						let idcheckbox="checkbox_"+ listid[i];
+						if(document.getElementById(idcheckbox).checked==true){
+							listdelete.push(listid[i]);
+						}
+						
+					}
+						$.ajax({
+				    		url:"/GameRule/UpdatePostCtrl",
+				    		type:"get",
+							data:{
+								'listIddelete': listdelete
+							},
+				    		success:function (rs){
+								$.ajax({
+						    		url:"/GameRule/listPostctrl",
+						    		type:"post",
+									data:{
+							
+									},
+						    		success:function (rs){
+						    			document.getElementById("replace").innerHTML=rs;
+						    		},
+						    		error: function(xhr){
+						    			$(location).attr('href',"/GameRule/login.jsp")
+						    		}
+		    					})
+				    		},
+				    		error: function(xhr){
+				    			$(location).attr('href',"/GameRule/login.jsp")
+				    		}
+			    		});
+				alert("Đã xóa các bình luận được chọn");
+					
+	}else{
+		return null;
+	}
+}
+
+function deletePost(idpost){
+		if(confirm("Có chắc chắn xóa")){					
+					
+						$.ajax({
+			    		url:"/GameRule/UpdatePostCtrl",
+			    		type:"get",
+						data:{
+							action:"delete",
+							idpost:idpost,
+						},
+			    		success:function (rs){
+				
+							$.ajax({
+				    		url:"/GameRule/listPostctrl",
+				    		type:"post",
+							data:{
+								
+							},
+				    		success:function (rs){
+				    			document.getElementById("replace").innerHTML=rs;
+				    		},
+				    		error: function(xhr){
+				    			$(location).attr('href',"/GameRule/login.jsp")
+				    		}
+				    	})
+			    			
+			    		},
+			    		error: function(xhr){
+	    		}
+	    	});
+	    }
+	    else{
+	        return false;
+	    }
+}
+
+function like_unlikecmt(idcmt){
+	let status=document.getElementById("like"+idcmt).innerHTML;
+	$.ajax({
+			    		url:"/GameRule/LikeCtrl",
+			    		type:"post",
+						data:{
+							current_status:status,
+							cmtid:idcmt,
+						},
+			    		success:function (rs){
+				
+						if(rs!="login"){
+							document.getElementById("like"+idcmt).innerHTML=rs;
+							$.ajax({
+				    		url:"/GameRule/LikeCtrl",
+				    		type:"get",
+							data:{
+								cmtid:idcmt,
+							},
+				    		success:function (rs){
+				    			document.getElementById("count"+idcmt).innerHTML="("+rs+")";
+				    		},
+				    		error: function(xhr){
+									
+							}
+							});
+							
+								
+						}
+						else{
+							if(confirm("Chuyển đến trang đăng nhập?")){
+								$(location).attr('href',"/GameRule/CheckCookie")
+							}
+							else{
+								return false;
+							}
+						}
+													
+				    	},
+			    		
+			    		error: function(xhr){
+	    		}
+})
+
+}

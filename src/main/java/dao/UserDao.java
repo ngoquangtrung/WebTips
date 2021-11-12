@@ -67,6 +67,25 @@ public class UserDao {
 		
 	}
 	
+	public void uptoAdmin(int iduser) {
+		try {
+			String query="update [dbo].[user] set permission=1 where id_user=?";
+			conn=new DBContext().getConnection();
+			ps=conn.prepareStatement(query);
+			ps.setInt(1, iduser);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.getStackTrace();
+			// TODO: handle exception
+		}
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+		}
+	}
+	
 	public User checkUser(String email,String pass) throws Exception{
 		try {
 			conn=new DBContext().getConnection();
@@ -76,7 +95,7 @@ public class UserDao {
 			ps.setString(2,pass);
 			rs=ps.executeQuery();			
 			while(rs.next()) {
-				User user=new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getString(6),rs.getString(7),rs.getInt(8),rs.getInt(9));
+				User user=new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getString(6),rs.getString(7),rs.getInt(8),rs.getInt(9),rs.getString(10));
 				return user;
 			}
 		} catch (Exception e) {
@@ -99,7 +118,7 @@ public class UserDao {
 			ps.setString(1,email);
 			rs=ps.executeQuery();		
 			while(rs.next()) {
-				User user=new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getString(6),rs.getString(7),rs.getInt(8),rs.getInt(9));
+				User user=new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getString(6),rs.getString(7),rs.getInt(8),rs.getInt(9),rs.getString(10));
 				return user;
 			}
 		} catch (Exception e) {
@@ -149,7 +168,7 @@ public class UserDao {
 			rs=ps.executeQuery();
 			List<User> list= new ArrayList<>();
 			while(rs.next()) {
-				User user=new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getString(6),rs.getString(7),rs.getInt(8),rs.getInt(9));
+				User user=new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getString(6),rs.getString(7),rs.getInt(8),rs.getInt(9),rs.getString(10));
 				list.add(user);
 			}
 			return list;

@@ -67,8 +67,8 @@ public class RegisterController extends HttpServlet {
 				}else if(gender.equals("female")) {
 					intgender=0;
 				}else intgender=3;*/
-				String hashpass=new HashText().getMD5(pass);			
-				User user =new User(1,name,email,hashpass,gender,date,time,0,1);
+				String hashpass=new HashText().getMD5(pass);
+				User user =new User(1,name,email,hashpass,gender,date,time,0,1,null);
 				userDao.addUser(user);
 			}
 			//request.getRequestDispatcher("register.jsp").forward(request, response);

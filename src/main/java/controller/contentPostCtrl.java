@@ -16,6 +16,7 @@ import dao.PartDao;
 import model.Comment;
 import model.Post;
 import model.PostPart;
+import model.User;
 
 /**
  * Servlet implementation class contentPostCtrl
@@ -43,14 +44,49 @@ public class contentPostCtrl extends HttpServlet {
 			List<PostPart> list= new PartDao().loadPart(post);
 			session.setAttribute("viewpost", post);
 			session.setAttribute("listpart", list);
+			CommentDao cmtDao=new CommentDao();
+			List<Comment> listcmt =cmtDao.listComment(post);
+			List<Comment> listRep =cmtDao.listRepcmt(post);
 			
-			List<Comment> listcmt =new CommentDao().listComment(post);
-			List<Comment> listRep =new CommentDao().listRepcmt(post);
+			User user=(User) session.getAttribute("currentuser");
+			/*if(user!=null) {
+				for (Comment comment : listcmt) {
+					if(cmtDao.checklikedcmt(user, comment)) {
+						comment.setLiked(true);
+					}
+					int countlike=cmtDao.countlike(comment.getIdcmt());
+					comment.setCountlike(countlike);
+					
+				}
+				for (Comment comment : listRep) {
+					if(cmtDao.checklikedcmt(user, comment)) {
+						comment.setLiked(true);
+					}					
+					int countlike=cmtDao.countlike(comment.getIdcmt());
+					comment.setCountlike(countlike);
+				}
+			}*/
+			for (Comment comment : listcmt) {
+				int countlike=cmtDao.countlike(comment.getIdcmt());
+				comment.setCountlike(countlike);
+				if(user!=null&&cmtDao.checklikedcmt(user, comment)) {
+					comment.setLiked(true);
+				}
+				
+			}
 			
+			for (Comment comment : listRep) {
+				int countlike=cmtDao.countlike(comment.getIdcmt());
+				comment.setCountlike(countlike);
+				if(user!=null&&cmtDao.checklikedcmt(user, comment)) {
+					comment.setLiked(true);
+				}
+			}
 			
-			session.setAttribute("listcmt", listcmt);
-			session.setAttribute("listrep", listRep);
-			
+			//session.setAttribute("listcmt", listcmt);
+			//session.setAttribute("listrep", listRep);
+			request.setAttribute("listcmt", listcmt);
+			request.setAttribute("listrep", listRep);
 			request.getRequestDispatcher("postContent.jsp").forward(request, response);
 			
 		} catch (Exception e) {

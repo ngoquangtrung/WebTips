@@ -11,10 +11,10 @@ public class User {
 	private String timeup;
 	private int permission;
 	private int status;
-	
+	private String image;
 	
 	public User() {}
-	public User(int id,String name,String email,String pass,int gender,String bd,String time,int permission,int status) {
+	public User(int id,String name,String email,String pass,int gender,String bd,String time,int permission,int status,String image) {
 	this.iduser=id;
 	this.name=name;
 	this.email=email;
@@ -24,6 +24,7 @@ public class User {
 	this.timeup=time;
 	this.permission=permission;
 	this.status=status;
+	this.image=image;
 	}
 	public int getIduser() {
 		return iduser;
@@ -78,6 +79,12 @@ public class User {
 	}
 	public void setStatus(int status) {
 		this.status = status;
+	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
 	}
 	
 	

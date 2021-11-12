@@ -2,6 +2,7 @@ package controller;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -42,7 +43,13 @@ public class listPostctrl extends HttpServlet {
 		
 		try {
 			List<Post> list = new ListPostDao().loadPostofStatus(user, 1);
-			session.setAttribute("listuser", list);
+			//session.setAttribute("listuser", list);
+			List<Integer> listid=new ArrayList<Integer>();
+			for (Post post : list) {
+				listid.add(post.getId_post());
+			}
+			request.setAttribute("listpost", list);
+			request.setAttribute("listid", listid);
 			request.getRequestDispatcher("screen/listPost.jsp").forward(request, response);
 			
 		} catch (Exception e) {

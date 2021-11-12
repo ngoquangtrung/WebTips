@@ -12,6 +12,9 @@ public class Comment implements Serializable {
 	private int status;
 	private String nameuser;
 	private Integer idrep;
+	private String posttitle;
+	private boolean liked;
+	private int countlike;
 	
 	public Comment() {}
 	public Comment(int idu,int idp,String content, String date,int status,String nameuser,Integer idrep,int idcmt) {
@@ -24,6 +27,15 @@ public class Comment implements Serializable {
 		this.idrep=idrep;
 		this.idcmt=idcmt;
 	}
+	public Comment(int idcmt,int idpost, int status, String date,String content,String posttitle) {
+		this.idcmt=idcmt;
+		this.idpost=idpost;
+		this.status=status;
+		this.content=content;
+		this.date=date;
+		this.posttitle=posttitle;
+	}
+	
 	public int getIduser() {
 		return iduser;
 	}
@@ -72,6 +84,24 @@ public class Comment implements Serializable {
 	}
 	public void setIdcmt(int idcmt) {
 		this.idcmt = idcmt;
+	}
+	public String getPosttitle() {
+		return posttitle;
+	}
+	public void setPosttitle(String posttitle) {
+		this.posttitle = posttitle;
+	}
+	public boolean isLiked() {
+		return liked;
+	}
+	public void setLiked(boolean liked) {
+		this.liked = liked;
+	}
+	public int getCountlike() {
+		return countlike;
+	}
+	public void setCountlike(int countlike) {
+		this.countlike = countlike;
 	}
 	
 }

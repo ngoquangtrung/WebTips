@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -36,14 +37,34 @@ public class CmtCtrl extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html;charset=UTF-8");
 		HttpSession session=request.getSession();
-		
-		User user=(User) session.getAttribute("currentuser");
+		PrintWriter out=response.getWriter();
+		User user = (User) session.getAttribute("currentuser");
+		if(user==null) {response.sendRedirect("login.jsp"); return;}
 		CommentDao cmtDao=new CommentDao();
+		out.println(user.getIduser());
 		try {
 			List<Comment> listcmt=cmtDao.listCmtofUser(user);
-			request.setAttribute("listcmt", listcmt);
+			List<Integer> listIdcmt=new ArrayList<Integer>();
+			for (Comment comment : listcmt) {
+				listIdcmt.add(comment.getIdcmt());
+				
+			}
+			/*if(listcmt!=null) {
+				
+			out.println("do dai "+listcmt.size());
+			for (Integer comment : listIdcmt) {
+				out.println("id  "+comment);
+				
+			}
+			}else {
+				out.print("rong");
+			}*/
 			
+			request.setAttribute("listid", listIdcmt);
+			request.setAttribute("listcmt", listcmt);
+			request.getRequestDispatcher("screen/listComment.jsp").forward(request, response);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -61,6 +82,9 @@ public class CmtCtrl extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html;charset=UTF-8");
+		
+		//them mot binh luan
 			HttpSession session=request.getSession();
 			PrintWriter out=response.getWriter();
 		try {

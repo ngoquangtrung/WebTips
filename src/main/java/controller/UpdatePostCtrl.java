@@ -49,12 +49,14 @@ public class UpdatePostCtrl extends HttpServlet {
 			HttpSession session = request.getSession(true);
 			User user=(User) session.getAttribute("currentuser");
 			Post post = (Post) session.getAttribute("currentpost");
-			List<Post> list = (List<Post>) session.getAttribute("listuser");
+			//List<Post> list = (List<Post>) session.getAttribute("listIddelete[]");
+			String[] list = request.getParameterValues("listIddelete[]");
+			
 			PrintWriter out = response.getWriter();
 			if (action == null||action.equals("")) {
-				for (Post p : list) {
+				/*for (Post p : list) {
 					int id = p.getId_post();
-					out.print("id " + id);
+					//out.print("id " + id);
 					String value = request.getParameter("check_box_" + id);
 					if (value != null) {
 						out.print(p.getTitle());
@@ -63,20 +65,36 @@ public class UpdatePostCtrl extends HttpServlet {
 						lpdao.updatePost(p);
 					}
 					//response.sendRedirect("user.jsp");
-				}
+				}*/
 				//response.sendRedirect("user.jsp");
+				ListPostDao lpdao = new ListPostDao();
+				for(int i=0;i<list.length;i++) {
+					int iddelete=Integer.parseInt(list[i]);
+					lpdao.deletePost(iddelete);
+				}
+				
+				
 			} else if (action.equals("delete")) {
-				post.setStatus(0);
+				/*post.setStatus(0);
 				ListPostDao lpdao = new ListPostDao();
 				lpdao.updatePost(post);
 				session.setAttribute("currentpost", null);
-				//response.sendRedirect("user.jsp");
+				if(user.getPermission()==0) {
+					response.sendRedirect("user.jsp");
+				}else {
+					response.sendRedirect("adminuser.jsp");
+				}*/
+				
+				int idpost=Integer.parseInt(request.getParameter("idpost"));
+				ListPostDao lpdao = new ListPostDao();
+				lpdao.deletePost(idpost);
+				
 			}
-			if(user.getPermission()==0) {
+			/*if(user.getPermission()==0) {
 				response.sendRedirect("user.jsp");
 			}else {
 				response.sendRedirect("adminuser.jsp");
-			}
+			}*/
 			
 
 		} catch (Exception e) {

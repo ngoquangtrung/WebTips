@@ -253,13 +253,13 @@ public class ListPostDao {
 		return null;
 	}
 	
-	public void deletePost(Post post) {
+	public void deletePost(int idpost) {
 		try {
-			int id=post.getId_post();
+			//int id=post.getId_post();
 			String query="exec sproc_deletepost ?";
 			conn=new DBContext().getConnection();
 			ps=conn.prepareStatement(query);
-			ps.setInt(1, id);
+			ps.setInt(1, idpost);
 			ps.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
