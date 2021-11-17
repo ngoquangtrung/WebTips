@@ -6,7 +6,7 @@
 <c:import url="header.jsp">
 	<c:param name="title" value="${type}"></c:param>
 </c:import>
-
+<div class="height-60"></div>
 <div class="container rounded bg-white mt-1 mb-1">
 	<div>
 		<h3>${type}</h3>

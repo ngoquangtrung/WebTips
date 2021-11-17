@@ -3,7 +3,11 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import context.DBContext;
@@ -16,7 +20,19 @@ public class CommentDao {
 	PreparedStatement ps =null;
 	ResultSet rs=null;
 	
-	public void addComment(Comment comment) throws Exception {
+	public static String dateFormat(ResultSet rs,int index) {
+		try {
+			Date date = new Date(rs.getTimestamp(index).getTime());
+			Format formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+			String timeString=formatter.format(date);
+			return timeString;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public boolean addComment(Comment comment) throws Exception {
 		try {
 			conn=new DBContext().getConnection();
 			String query="exec [dbo].[sproc_addcmt] ?,?,?,?,?";
@@ -31,17 +47,17 @@ public class CommentDao {
 				ps.setObject(5, null);
 			}
 			ps.executeUpdate();
-			
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
+			
+			return false;
 		}
 		try {
 		conn.close();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
+		return true;
 		
 	}
 	
@@ -64,7 +80,8 @@ public class CommentDao {
 			rs=ps.executeQuery();
 			List<Comment> list=new ArrayList<Comment>();
 			while(rs.next()) {
-				Comment cmt = new Comment(rs.getInt(1),rs.getInt(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getString(6),rs.getInt(7),rs.getInt(8));
+				String time=dateFormat(rs,4);
+				Comment cmt = new Comment(rs.getInt(1),rs.getInt(2),rs.getString(3),time,rs.getInt(5),rs.getString(6),rs.getInt(7),rs.getInt(8));
 				list.add(cmt);
 			}
 			return list;
@@ -91,7 +108,8 @@ public class CommentDao {
 			rs=ps.executeQuery();
 			List<Comment> list=new ArrayList<Comment>();
 			while(rs.next()) {
-				Comment cmt = new Comment(rs.getInt(1),rs.getInt(2),rs.getString(3),rs.getString(4),rs.getInt(5),rs.getString(6),rs.getInt(7),rs.getInt(8));
+				String timeString= dateFormat(rs,4);
+				Comment cmt = new Comment(rs.getInt(1),rs.getInt(2),rs.getString(3),timeString,rs.getInt(5),rs.getString(6),rs.getInt(7),rs.getInt(8));
 				list.add(cmt);
 			}
 			return list;
@@ -114,7 +132,9 @@ public class CommentDao {
 			rs=ps.executeQuery();
 			List<Comment> list=new ArrayList<Comment>();
 			while(rs.next()) {
-				Comment cmt = new Comment(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getString(4),rs.getString(5),rs.getString(6));
+				
+				String time= dateFormat(rs,4);
+				Comment cmt = new Comment(rs.getInt(1),rs.getInt(2),rs.getInt(3),time,rs.getString(5),rs.getString(6));
 				list.add(cmt);
 			}
 			return list;

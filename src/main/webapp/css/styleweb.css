@@ -40,6 +40,10 @@ label.error {
 	background-color: #c0c0c0;
 	padding: 10px 10px 10px 10px;
 }
-.container{
-	margin-top: 60px !important;
+.height-60{
+	height:60px;
+	opacity: 0;
+	background: linear-gradient(to right, #0062E6, #33AEFF);
 }
+
+
